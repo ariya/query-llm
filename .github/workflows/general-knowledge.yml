@@ -22,6 +22,7 @@ jobs:
           - mistralai/mixtral-8x7b-instruct              # $0.24 [32K]
           - google/gemma-2-27b-it                        # $0.27 [ 4K]
           - meta-llama/llama-3-70b-instruct              # $0.59 [ 8K]
+          - openai/gpt-4o-mini                           # $0.15/$0.60 [ 128K]
           - google/gemini-flash-1.5                      # $0.25/$0.75 [2800K]
     steps:
       - uses: actions/checkout@v4
