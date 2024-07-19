@@ -54,7 +54,7 @@ To use [OpenAI GPT model](https://platform.openai.com/docs), configure the envir
 export OPENAI_API_KEY="sk-yourownapikey"
 ```
 
-To use [OpenRouter](https://openrouter.ai/), select a model (e.g. [Mistral 7B](https://openrouter.ai/models/mistralai/mistral-7b-instruct), [LLama-3 8B](https://openrouter.ai/models/meta-llama/llama-3-8b-instruct), [OpenChat 3.6](https://openrouter.ai/models/openchat/openchat-8b), etc) and set the environment variables accordingly.
+To use [OpenRouter](https://openrouter.ai/), select a model (e.g. [Mistral 7B](https://openrouter.ai/models/mistralai/mistral-7b-instruct), [LLama-3 8B](https://openrouter.ai/models/meta-llama/llama-3-8b-instruct), [Qwen-2 7B](https://openrouter.ai/models/qwen/qwen-2-7b-instruct), etc) and set the environment variables accordingly.
 ```bash
 export LLM_API_BASE_URL=https://openrouter.ai/api/v1
 export LLM_API_KEY="yourownapikey"
