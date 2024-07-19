@@ -61,7 +61,7 @@ const pipe = (...fns) => arg => fns.reduce((d, fn) => d.then(fn), Promise.resolv
 const chat = async (messages, handler) => {
     const url = `${LLM_API_BASE_URL}/chat/completions`;
     const auth = LLM_API_KEY ? { 'Authorization': `Bearer ${LLM_API_KEY}` } : {};
-    const model = LLM_CHAT_MODEL || 'gpt-3.5-turbo';
+    const model = LLM_CHAT_MODEL || 'gpt-4o-mini';
     const stop = ['<|im_end|>', '<|end|>', '<|eot_id|>', '<|end_of_turn|>', 'INQUIRY: '];;
     const max_tokens = 400;
     const temperature = 0;
