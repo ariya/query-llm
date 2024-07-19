@@ -23,7 +23,6 @@ jobs:
           - google/gemma-2-27b-it                        # $0.27 [ 4K]
           - meta-llama/llama-3-70b-instruct              # $0.59 [ 8K]
           - google/gemini-flash-1.5                      # $0.25/$0.75 [2800K]
-          - qwen/qwen-2-72b-instruct                     # $0.59/$0.79 [  32K]
     steps:
       - uses: actions/checkout@v4
 
