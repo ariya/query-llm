@@ -12,15 +12,15 @@ jobs:
       fail-fast: false
       matrix:
         model:
-          - mistralai/mistral-7b-instruct-v0.3           # $0.07 [32K]
-          - qwen/qwen-2-7b-instruct                      # $0.07 [32K]
-          - meta-llama/llama-3-8b-instruct               # $0.07 [ 8K]
-          - microsoft/phi-3-medium-4k-instruct           # $0.14 [ 4K]
-          - nousresearch/hermes-2-pro-llama-3-8b         # $0.15 [ 8K]
-          - google/gemma-2-9b-it                         # $0.20 [ 8K]
-          - mistralai/mixtral-8x7b-instruct              # $0.24 [32K]
-          - google/gemma-2-27b-it                        # $0.27 [ 4K]
-          - meta-llama/llama-3-70b-instruct              # $0.59 [ 8K]
+          - mistralai/mistral-7b-instruct-v0.3           # $0.07 [ 32K]
+          - qwen/qwen-2-7b-instruct                      # $0.07 [ 32K]
+          - meta-llama/llama-3-8b-instruct               # $0.07 [  8K]
+          - microsoft/phi-3-medium-4k-instruct           # $0.14 [  4K]
+          - nousresearch/hermes-2-pro-llama-3-8b         # $0.15 [  8K]
+          - google/gemma-2-9b-it                         # $0.20 [  8K]
+          - mistralai/mixtral-8x7b-instruct              # $0.24 [ 32K]
+          - google/gemma-2-27b-it                        # $0.27 [  4K]
+          - meta-llama/llama-3-70b-instruct              # $0.59 [  8K]
           - openai/gpt-4o-mini                           # $0.15/$0.60 [ 128K]
     steps:
       - uses: actions/checkout@v4
