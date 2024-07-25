@@ -14,7 +14,7 @@ jobs:
         model:
           - mistralai/mistral-7b-instruct-v0.3           # $0.07 [ 32K]
           - qwen/qwen-2-7b-instruct                      # $0.07 [ 32K]
-          - meta-llama/llama-3-8b-instruct               # $0.07 [  8K]
+          - meta-llama/llama-3.1-8b-instruct             # $0.09 [128K]
           - microsoft/phi-3-medium-4k-instruct           # $0.14 [  4K]
           - nousresearch/hermes-2-pro-llama-3-8b         # $0.15 [  8K]
           - mistralai/mistral-nemo                       # $0.18 [128K]
