@@ -91,7 +91,7 @@ Pipeline.Reason.Keyphrases: /pyramid/
 Story:  Famous people
 User: Who wrote the poems in Masnavi?
 Assistant: The poems in Masnavi were written by the Persian poet, /Rūmī|Rumi|Jalal/.
-Pipeline.Reason.Keyphrases: /author|poet|poem/ /Masnavi/
+Pipeline.Reason.Keyphrases: /author|poet|poem|write|wrote|writer/ /Masnavi/
 
 User: Who was the first President of USA?
 Assistant: George /Washington/ was the first US president, serving from 1789 to 1797.
