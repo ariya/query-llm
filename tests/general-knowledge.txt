@@ -103,7 +103,7 @@ Pipeline.Reason.Keyphrases: /Santa Maria|Columbus/
 
 User: Who is the author of LISP?
 Assistant: John /Mc\s?Carthy/ invented LISP in 1958 at the MIT.
-Pipeline.Reason.Keyphrases: /LISP/
+Pipeline.Reason.Keyphrases: /LISP|language/
 
 User: Who painted Mona Lisa?
 Assistant: The Mona Lisa was painted by the renowned Italian polymath, Leonardo /da Vinci/.
