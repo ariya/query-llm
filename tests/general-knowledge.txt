@@ -115,7 +115,7 @@ Pipeline.Reason.Keyphrases: /South Africa|apartheid|leader/
 
 User: Who was Britain PM who rallied the British folks during WW 2?
 Assistant: During World War II, Winston /Churchill/ served as the Prime Minister of Britain.
-Pipeline.Reason.Keyphrases: /PM|Prime Minister/
+Pipeline.Reason.Keyphrases: /PM|Prime Minister|Churchill|WW|World War/
 
 Story: Cuisine
 User: Where is the origin of Biryani: India or Ireland?
