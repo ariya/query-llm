@@ -11,7 +11,7 @@ runs:
 
     - name: Launch llama.cpp with Phi-3.5 Mini
       shell: bash
-      run: ./build/bin/llama-server -c 8192 --hf-repo lmstudio-community/Phi-3.5-mini-instruct-GGUF --hf-file Phi-3.5-mini-instruct-Q4_K_M.gguf &
+      run: ./build/bin/llama-server -c 8192 --hf-repo bartowski/Phi-3.5-mini-instruct-GGUF --hf-file Phi-3.5-mini-instruct-Q4_K_M.gguf &
 
     - name: Wait until it is ready
       shell: bash
