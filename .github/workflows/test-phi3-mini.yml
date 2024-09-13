@@ -64,3 +64,22 @@ jobs:
       - run: ./query-llm.js tests/canary-multi-turn.txt
         env:
           LLM_API_BASE_URL: 'http://127.0.0.1:8080/v1'
+
+  high-school-stem:
+    needs: chain-of-thought
+    runs-on: ubuntu-22.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Prepare LLM (Phi-3.5 Mini)
+        uses: ./.github/actions/prepare-llm
+        timeout-minutes: 3
+
+      - run: ./query-llm.js tests/high-school-stem.txt
+        env:
+          LLM_API_BASE_URL: 'http://127.0.0.1:8080/v1'
