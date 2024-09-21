@@ -49,19 +49,100 @@ export LLM_API_BASE_URL=http://localhost:3928/v1
 
 ## Using Managed LLM Services
 
-To use [OpenAI GPT model](https://platform.openai.com/docs), configure the environment variable `OPENAI_API_KEY` with your API key:
+Supported LLM services include [AI21](https://studio.ai21.com), [Deep Infra](https://deepinfra.com), [DeepSeek](https://platform.deepseek.com/), [Fireworks](https://fireworks.ai), [Groq](https://groq.com), [Hyperbolic](https://www.hyperbolic.xyz), [Lepton](https://lepton.ai), [Mistral](https://console.mistral.ai), [Novita](https://novita.ai), [Octo](https://octo.ai), [OpenAI](https://platform.openai.com), [OpenRouter](https://openrouter.ai), and [Together](https://www.together.ai).
+
+For configuration specifics, refer to the relevant section. The examples use Llama-3.1 8B (or GPT-4o Mini for OpenAI), but any LLM with at least 7B parameters should work just as well, such as Mistral 7B, Qwen-2 7B, or Gemma-2 9B.
+
+* [AI21](https://studio.ai21.com)
 ```bash
-export OPENAI_API_KEY="sk-yourownapikey"
+export LLM_API_BASE_URL=https://api.ai21.com/studio/v1
+export LLM_API_KEY="yourownapikey"
+export LLM_CHAT_MODEL=jamba-1.5-mini
 ```
 
-To use [OpenRouter](https://openrouter.ai/), select a model (e.g. [Mistral 7B](https://openrouter.ai/models/mistralai/mistral-7b-instruct), [LLama-3 8B](https://openrouter.ai/models/meta-llama/llama-3-8b-instruct), [Qwen-2 7B](https://openrouter.ai/models/qwen/qwen-2-7b-instruct), etc) and set the environment variables accordingly.
+* [Deep Infra](https://deepinfra.com)
+```bash
+export LLM_API_BASE_URL=https://api.deepinfra.com/v1/openai
+export LLM_API_KEY="yourownapikey"
+export LLM_CHAT_MODEL="meta-llama/Meta-Llama-3.1-8B-Instruct"
+```
+
+* [DeepSeek](https://platform.deepseek.com)
+```bash
+export LLM_API_BASE_URL=https://api.deepseek.com/v1
+export LLM_API_KEY="yourownapikey"
+export LLM_CHAT_MODEL="deepseek-chat"
+```
+
+* [Fireworks](https://fireworks.ai/)
+```bash
+export LLM_API_BASE_URL=https://api.fireworks.ai/inference/v1
+export LLM_API_KEY="yourownapikey"
+export LLM_CHAT_MODEL="accounts/fireworks/models/llama-v3p1-8b-instruct"
+```
+
+* [Groq](https://groq.com/)
+```bash
+export LLM_API_BASE_URL=https://api.groq.com/openai/v1
+export LLM_API_KEY="yourownapikey"
+export LLM_CHAT_MODEL="llama-3.1-8b-instant"
+```
+
+* [Hyperbolic](https://www.hyperbolic.xyz)
+```bash
+export LLM_API_BASE_URL=https://api.hyperbolic.xyz/v1
+export LLM_API_KEY="yourownapikey"
+export LLM_CHAT_MODEL="meta-llama/Meta-Llama-3.1-8B-Instruct"
+```
+
+* [Lepton](https://lepton.ai)
+```bash
+export LLM_API_BASE_URL=https://llama3-1-8b.lepton.run/api/v1
+export LLM_API_KEY="yourownapikey"
+export LLM_CHAT_MODEL="llama3-1-8b"
+```
+
+* [Mistral](https://console.mistral.ai)
+```bash
+export LLM_API_BASE_URL=https://api.mistral.ai/v1
+export LLM_API_KEY="yourownapikey"
+export LLM_CHAT_MODEL="open-mistral-7b"
+```
+
+* [Novita](https://novita.ai)
+```bash
+export LLM_API_BASE_URL=https://api.novita.ai/v3/openai
+export LLM_API_KEY="yourownapikey"
+export LLM_CHAT_MODEL="meta-llama/llama-3.1-8b-instruct"
+```
+
+* [Octo](https://octo.ai)
+```bash
+export LLM_API_BASE_URL=https://text.octoai.run/v1/
+export LLM_API_KEY="yourownapikey"
+export LLM_CHAT_MODEL="meta-llama-3.1-8b-instruct"
+```
+
+* [OpenAI](https://platform.openai.com)
+```bash
+export LLM_API_BASE_URL=https://api.openai.com/v1
+export LLM_API_KEY="yourownapikey"
+export LLM_CHAT_MODEL="gpt-4o-mini"
+```
+
+* [OpenRouter](https://openrouter.ai/)
 ```bash
 export LLM_API_BASE_URL=https://openrouter.ai/api/v1
 export LLM_API_KEY="yourownapikey"
-export LLM_CHAT_MODEL="meta-llama/llama-3-8b-instruct"
+export LLM_CHAT_MODEL="meta-llama/llama-3.1-8b-instruct"
 ```
 
-Query LLM is also compatible with [Anyscale](https://www.anyscale.com), [Deep Infra](https://deepinfra.com), [Fireworks](https://fireworks.ai), [Groq](https://groq.com), [Lepton](https://lepton.ai), [Novita](https://novita.ai), [Octo](https://octo.ai), and [Together](https://www.together.ai). For details on how to configure the environment variables for each of these services, refer to the documentation of the sister project, [Ask LLM](https://github.com/ariya/ask-llm).
+* [Together](https://www.together.ai/)
+```bash
+export LLM_API_BASE_URL=https://api.together.xyz/v1
+export LLM_API_KEY="yourownapikey"
+export LLM_CHAT_MODEL="meta-llama/Meta-Llama-3.1-8B-Instruct-Turbo"
+```
 
 ## Evaluating Questions
 
