@@ -1,21 +1,21 @@
 # Query LLM
 
-Query LLM is a simple, zero-dependency CLI tool for querying an LLM with questions. It works seamlessly with both cloud-based managed LLM services (e.g. [OpenAI GPT](https://platform.openai.com/docs), [Groq](https://groq.com), [OpenRouter](https://openrouter.ai)) and locally hosted LLM servers (e.g. [llama.cpp](https://github.com/ggerganov/llama.cpp), [LocalAI](https://localai.io), [Ollama](https://ollama.com), etc). Internally, it guides the LLM to perform step-by-step reasoning following the [Chain of Thought approach](https://www.promptingguide.ai/techniques/cot).
+**Query LLM** is a simple, zero-dependency CLI tool for querying large language models (LLMs). It works seamlessly with both cloud-based LLM services (e.g., [OpenAI GPT](https://platform.openai.com/docs), [Groq](https://groq.com), [OpenRouter](https://openrouter.ai)) and locally hosted LLMs (e.g., [llama.cpp](https://github.com/ggerganov/llama.cpp), [LocalAI](https://localai.io), [Ollama](https://ollama.com), etc.). Internally, it guides the LLM to perform step-by-step reasoning using the [Chain of Thought method](https://www.promptingguide.ai/techniques/cot).
 
-You’ll need either [Node.js](https://nodejs.org) (>= v18) or [Bun](https://bun.sh) to run Query LLM.
+To run Query LLM, ensure that [Node.js](https://nodejs.org) (v18 or higher) or [Bun](https://bun.sh) is installed.
 
 ```bash
 ./query-llm.js
 ```
 
-For quick answers, pipe your question directly:
+To obtain quick responses, pipe a question directly:
 ```bash
-echo "Indonesia travel destinations?" | ./query-llm.js
+echo "Top travel destinations in Indonesia?" | ./query-llm.js
 ```
 
-To perform specific tasks:
+For specific tasks:
 ```bash
-echo "Translate into German: thank you" | ./query-llm.js
+echo "Translate 'thank you' into German" | ./query-llm.js
 ```
 
 ## Using Local LLM Servers
