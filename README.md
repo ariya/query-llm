@@ -18,6 +18,8 @@ For specific tasks:
 echo "Translate 'thank you' into German" | ./query-llm.js
 ```
 
+For simpler interactions with LLMs using zero-shot prompting, refer to the sister project, [ask-llm](https://github.com/ariya/ask-llm).
+
 ## Using Local LLM Servers
 
 Supported local LLM servers include [llama.cpp](https://github.com/ggerganov/llama.cpp), [Jan](https://jan.ai), [Ollama](https://ollama.com), and [LocalAI](https://localai.io).
