@@ -1,6 +1,6 @@
 # Query LLM
 
-**Query LLM** is a simple, zero-dependency CLI tool for querying large language models (LLMs). It works seamlessly with both cloud-based LLM services (e.g., [OpenAI GPT](https://platform.openai.com/docs), [Groq](https://groq.com), [OpenRouter](https://openrouter.ai)) and locally hosted LLMs (e.g., [llama.cpp](https://github.com/ggerganov/llama.cpp), [LocalAI](https://localai.io), [Ollama](https://ollama.com), etc.). Internally, it guides the LLM to perform step-by-step reasoning using the [Chain of Thought method](https://www.promptingguide.ai/techniques/cot).
+**Query LLM** is a simple, zero-dependency CLI tool for querying large language models (LLMs). It works seamlessly with both cloud-based LLM services (e.g., [OpenAI GPT](https://platform.openai.com/docs), [Groq](https://groq.com), [OpenRouter](https://openrouter.ai)) and locally hosted LLMs (e.g. [llama.cpp](https://github.com/ggerganov/llama.cpp), [LM Studio](https://lmstudio.ai), [Ollama](https://ollama.com)). Internally, it guides the LLM to perform step-by-step reasoning using the [Chain of Thought method](https://www.promptingguide.ai/techniques/cot).
 
 To run Query LLM, ensure that [Node.js](https://nodejs.org) (v18 or higher) or [Bun](https://bun.sh) is installed.
 
@@ -22,7 +22,7 @@ For simpler interactions with LLMs using zero-shot prompting, refer to the siste
 
 ## Using Local LLM Servers
 
-Supported local LLM servers include [llama.cpp](https://github.com/ggerganov/llama.cpp), [Jan](https://jan.ai), [Ollama](https://ollama.com), and [LocalAI](https://localai.io).
+Supported local LLM servers include [llama.cpp](https://github.com/ggerganov/llama.cpp), [Jan](https://jan.ai), [Ollama](https://ollama.com), [LocalAI](https://localai.io), and [LM Studio](https://lmstudio.ai).
 
 To utilize [llama.cpp](https://github.com/ggerganov/llama.cpp) locally with its inference engine, ensure to load a quantized model such as [Phi-3.5 Mini](https://huggingface.co/bartowski/Phi-3.5-mini-instruct-GGUF), or [Llama-3.1 8B](https://huggingface.co/lmstudio-community/Meta-Llama-3.1-8B-Instruct-GGUF). Adjust the environment variable `LLM_API_BASE_URL` accordingly:
 ```bash
@@ -47,6 +47,11 @@ For [LocalAI](https://localai.io), initiate its container and adjust the environ
 ```bash
 docker run -ti -p 8080:8080 localai/localai tinyllama-chat
 export LLM_API_BASE_URL=http://localhost:3928/v1
+```
+
+For [LM Studio](https://lmstudio.ai), search for and download a model. Next, go to the Developer tab, select the model to load, and click the Start Server button. Then, set the `LLM_API_BASE_URL` environment variable, noting that the server by default runs on port `1234`:
+```bash
+export LLM_API_BASE_URL=http://127.0.0.1:1234/v1
 ```
 
 ## Using Managed LLM Services
