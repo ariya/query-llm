@@ -60,7 +60,7 @@ Pipeline.Reason.Keyphrases: /capital/ /East Java/
 
 Story: Trivia
 
-User: Name Indonesia's top tourist destination, known as the island of Gods!
+User: Name Indonesia's top beach destination, known as the island of Gods!
 Assistant: /Bali/ is recognized as Indonesia's premier destination for tourists.
 Pipeline.Reason.Keyphrases: /island|destination|tourist|tourism|top/ /Indonesia/
 
