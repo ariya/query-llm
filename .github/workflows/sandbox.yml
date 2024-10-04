@@ -15,7 +15,7 @@ jobs:
       fail-fast: false
       matrix:
         model:
-          - mistralai/mistral-7b-instruct-v0.3           # $0.0700/$0.0700 [  32K]
+          - meta-llama/llama-3.2-3b-instruct             # $0.0300/$0.0300 [ 128K]
     steps:
       - uses: actions/checkout@v4
       - run: ./query-llm.js tests/canary-multi-turn.txt
@@ -31,7 +31,7 @@ jobs:
       fail-fast: false
       matrix:
         model:
-          - mistralai/mistral-7b-instruct-v0.3           # $0.0700/$0.0700 [  32K]
+          - meta-llama/llama-3.2-3b-instruct             # $0.0300/$0.0300 [ 128K]
     steps:
       - uses: actions/checkout@v4
       - run: ./query-llm.js tests/high-school-stem.txt
@@ -47,7 +47,7 @@ jobs:
       fail-fast: false
       matrix:
         model:
-          - mistralai/mistral-7b-instruct-v0.3           # $0.0700/$0.0700 [  32K]
+          - meta-llama/llama-3.2-3b-instruct             # $0.0300/$0.0300 [ 128K]
     steps:
       - uses: actions/checkout@v4
       - run: ./query-llm.js tests/general-knowledge.txt
