@@ -12,18 +12,18 @@ jobs:
       fail-fast: false
       matrix:
         model:
-          - mistralai/mistral-7b-instruct-v0.3           # $0.07 [ 32K]
-          - qwen/qwen-2-7b-instruct                      # $0.07 [ 32K]
-          - meta-llama/llama-3.1-8b-instruct             # $0.09 [128K]
-          - microsoft/phi-3.5-mini-128k-instruct         # $0.10 [128K]
-          - nousresearch/hermes-2-pro-llama-3-8b         # $0.15 [  8K]
-          - mistralai/mistral-nemo                       # $0.18 [128K]
-          - mistralai/mixtral-8x7b-instruct              # $0.24 [ 32K]
-          - google/gemma-2-27b-it                        # $0.27 [  4K]
-          - meta-llama/llama-3.1-70b-instruct            # $0.40 [ 128K]
-          - google/gemini-flash-1.5                      # $0.075/$0.300 [1000K]
-          - ai21/jamba-1-5-mini                          # $0.200/$0.400 [ 256K]
-          - openai/gpt-4o-mini                           # $0.150/$0.600 [ 128K]
+          - mistralai/mistral-7b-instruct-v0.3           # $0.0700/$0.0700 [  32K]
+          - qwen/qwen-2-7b-instruct                      # $0.0700/$0.0700 [  32K]
+          - meta-llama/llama-3.1-8b-instruct             # $0.0900/$0.0900 [ 128K]
+          - microsoft/phi-3.5-mini-128k-instruct         # $0.1000/$0.1000 [ 128K]
+          - nousresearch/hermes-2-pro-llama-3-8b         # $0.1500/$0.1500 [   8K]
+          - mistralai/mistral-nemo                       # $0.1800/$0.1800 [ 128K]
+          - mistralai/mixtral-8x7b-instruct              # $0.2400/$0.2400 [  32K]
+          - google/gemma-2-27b-it                        # $0.2700/$0.2700 [   4K]
+          - meta-llama/llama-3.1-70b-instruct            # $0.4000/$0.4000 [ 128K]
+          - google/gemini-flash-1.5                      # $0.0750/$0.3000 [1000K]
+          - ai21/jamba-1-5-mini                          # $0.2000/$0.4000 [ 256K]
+          - openai/gpt-4o-mini                           # $0.1500/$0.6000 [ 128K]
     steps:
       - uses: actions/checkout@v4
 
