@@ -1,4 +1,4 @@
-name: Test with Phi-3.5 Mini
+name: Test with small LLM
 
 on: [push, pull_request]
 
@@ -13,7 +13,7 @@ jobs:
         with:
           node-version: '18'
 
-      - name: Prepare LLM (Phi-3.5 Mini)
+      - name: Prepare LLM
         uses: ./.github/actions/prepare-llm
         timeout-minutes: 3
 
@@ -35,7 +35,7 @@ jobs:
         with:
           node-version: '18'
 
-      - name: Prepare LLM (Phi-3.5 Mini)
+      - name: Prepare LLM
         uses: ./.github/actions/prepare-llm
         timeout-minutes: 3
 
@@ -57,7 +57,7 @@ jobs:
         with:
           node-version: '18'
 
-      - name: Prepare LLM (Phi-3.5 Mini)
+      - name: Prepare LLM
         uses: ./.github/actions/prepare-llm
         timeout-minutes: 3
 
@@ -76,7 +76,7 @@ jobs:
         with:
           node-version: '18'
 
-      - name: Prepare LLM (Phi-3.5 Mini)
+      - name: Prepare LLM
         uses: ./.github/actions/prepare-llm
         timeout-minutes: 3
 
