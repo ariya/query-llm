@@ -92,7 +92,7 @@ const chat = async (messages, handler) => {
     const extract = (data) => {
         const { choices, candidates } = data;
         const first = choices ? choices[0] : candidates[0];
-        if (first?.content) {
+        if (first?.content || first?.message) {
             const content = first?.content ? first.content : first.message.content;
             const parts = content?.parts;
             const answer = parts ? parts.map(part => part.text).join('') : content;
