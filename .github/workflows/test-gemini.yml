@@ -1,0 +1,74 @@
+name: Test with Gemini
+
+on: [push, pull_request]
+
+jobs:
+  zero-shot:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+
+      - run: echo 'Which planet in our solar system is the largest?' | ./query-llm.js | tee output.txt
+        env:
+          LLM_API_BASE_URL: 'https://generativelanguage.googleapis.com/v1beta'
+          LLM_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          LLM_CHAT_MODEL: 'gemini-1.5-flash-002'
+          LLM_ZERO_SHOT: 1
+
+      - run: cat output.txt
+      - run: grep -i jupiter output.txt
+
+  chain-of-thought:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+
+      - run: echo 'Which planet in our solar system is the largest?' | ./query-llm.js | tee output.txt
+        env:
+          LLM_API_BASE_URL: 'https://generativelanguage.googleapis.com/v1beta'
+          LLM_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          LLM_CHAT_MODEL: 'gemini-1.5-flash-002'
+
+      - run: cat output.txt
+      - run: grep -i jupiter output.txt
+
+  multi-turn:
+    needs: chain-of-thought
+    runs-on: ubuntu-22.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - run: ./query-llm.js tests/canary-multi-turn.txt
+        env:
+          LLM_API_BASE_URL: 'https://generativelanguage.googleapis.com/v1beta'
+          LLM_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          LLM_CHAT_MODEL: 'gemini-1.5-flash-002'
+
+  high-school-stem:
+    needs: chain-of-thought
+    runs-on: ubuntu-22.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - run: ./query-llm.js tests/high-school-stem.txt
+        env:
+          LLM_API_BASE_URL: 'https://generativelanguage.googleapis.com/v1beta'
+          LLM_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          LLM_CHAT_MODEL: 'gemini-1.5-flash-002'
+
+  general-knowledge:
+    needs: chain-of-thought
+    runs-on: ubuntu-22.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - run: ./query-llm.js tests/general-knowledge.txt
+        env:
+          LLM_API_BASE_URL: 'https://generativelanguage.googleapis.com/v1beta'
+          LLM_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          LLM_CHAT_MODEL: 'gemini-1.5-flash-002'

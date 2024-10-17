@@ -59,35 +59,52 @@ const pipe = (...fns) => arg => fns.reduce((d, fn) => d.then(fn), Promise.resolv
  */
 
 const chat = async (messages, handler) => {
-    const url = `${LLM_API_BASE_URL}/chat/completions`;
-    const auth = LLM_API_KEY ? { 'Authorization': `Bearer ${LLM_API_KEY}` } : {};
-    const model = LLM_CHAT_MODEL || 'gpt-4o-mini';
-    const stop = ['<|im_end|>', '<|end|>', '<|eot_id|>', 'INQUIRY:'];
-    const max_tokens = 400;
-    const temperature = 0;
+    const gemini = LLM_API_BASE_URL.indexOf('generativelanguage.google') > 0;
     const stream = LLM_STREAMING && typeof handler === 'function';
+    const model = LLM_CHAT_MODEL || 'gpt-4o-mini';
+    const generate = stream ? 'streamGenerateContent?alt=sse&' : 'generateContent?'
+    const url = gemini ? `${LLM_API_BASE_URL}/models/${model}:${generate}key=${LLM_API_KEY}` : `${LLM_API_BASE_URL}/chat/completions`
+    const auth = (LLM_API_KEY && !gemini) ? { 'Authorization': `Bearer ${LLM_API_KEY}` } : {};
+    const stop = ['<|im_end|>', '<|end|>', '<|eot_id|>'];
+    const max_tokens = 200;
+    const temperature = 0;
+
+    const bundles = messages.map(({ role, content }) => {
+        return { role, parts: [{ text: content }] };
+    });
+    const contents = bundles.filter(({ role }) => role === 'user');
+    const system_instruction = bundles.filter(({ role }) => role === 'system').shift();
+    const generationConfig = { temperature, maxOutputTokens: max_tokens, responseMimeType: 'text/plain' };
+
+    const body = gemini ?
+        { system_instruction, contents, generationConfig } :
+        { messages, model, stop, max_tokens, temperature, stream }
+
     const response = await fetch(url, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', ...auth },
-        body: JSON.stringify({ messages, model, stop, max_tokens, temperature, stream })
+        body: JSON.stringify(body)
     });
     if (!response.ok) {
         throw new Error(`HTTP error with the status: ${response.status} ${response.statusText}`);
     }
 
-    LLM_DEBUG_CHAT && messages.forEach(({ role, content }) => {
-        console.log(`${MAGENTA}${role}:${NORMAL} ${content}`);
-    });
+    const extract = (data) => {
+        const { choices, candidates } = data;
+        const first = choices ? choices[0] : candidates[0];
+        if (first?.content) {
+            const content = first?.content ? first.content : first.message.content;
+            const parts = content?.parts;
+            const answer = parts ? parts.map(part => part.text).join('') : content;
+            return answer;
+        }
+        return '';
+    }
 
     if (!stream) {
         const data = await response.json();
-        const { choices } = data;
-        const first = choices[0];
-        const { message } = first;
-        const { content } = message;
-        const answer = content.trim();
-        handler && handler(answer);
-        LLM_DEBUG_CHAT && console.log(`${YELLOW}${answer}${NORMAL}`);
+        const answer = extract(data).trim();
+        (answer.length > 0) && handler && handler(answer);
         return answer;
     }
 
@@ -97,10 +114,15 @@ const chat = async (messages, handler) => {
         if (prefix === 'data: ') {
             const payload = line.substring(6);
             try {
-                const { choices } = JSON.parse(payload);
-                const [choice] = choices;
-                const { delta } = choice;
-                partial = delta?.content;
+                const data = JSON.parse(payload);
+                const { choices, candidates } = data;
+                if (choices) {
+                    const [choice] = choices;
+                    const { delta } = choice;
+                    partial = delta?.content;
+                } else if (candidates) {
+                    partial = extract(data);
+                }
             } catch (e) {
                 // ignore
             } finally {
@@ -131,7 +153,7 @@ const chat = async (messages, handler) => {
                 break;
             }
             if (line.length > 0) {
-                const partial = parse(line);
+                const partial = parse(line.trim());
                 if (partial === null) {
                     buffer = line;
                 } else if (partial && partial.length > 0) {
