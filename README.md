@@ -61,7 +61,7 @@ export LLM_API_BASE_URL=http://127.0.0.1:10002/v1
 
 ## Using Managed LLM Services
 
-Supported LLM services include [AI21](https://studio.ai21.com), [Deep Infra](https://deepinfra.com), [DeepSeek](https://platform.deepseek.com/), [Fireworks](https://fireworks.ai), [Gemini](https://ai.google.dev/gemini-api), [Groq](https://groq.com), [Hyperbolic](https://www.hyperbolic.xyz), [Lepton](https://lepton.ai), [Mistral](https://console.mistral.ai), [Novita](https://novita.ai), [Octo](https://octo.ai), [OpenAI](https://platform.openai.com), [OpenRouter](https://openrouter.ai), and [Together](https://www.together.ai).
+Supported LLM services include [AI21](https://studio.ai21.com), [Deep Infra](https://deepinfra.com), [DeepSeek](https://platform.deepseek.com/), [Fireworks](https://fireworks.ai), [Gemini](https://ai.google.dev/gemini-api), [Groq](https://groq.com), [Hyperbolic](https://www.hyperbolic.xyz), [Lepton](https://lepton.ai), [Mistral](https://console.mistral.ai), [Nebius](https://studio.nebius.ai), [Novita](https://novita.ai), [Octo](https://octo.ai), [OpenAI](https://platform.openai.com), [OpenRouter](https://openrouter.ai), and [Together](https://www.together.ai).
 
 For configuration specifics, refer to the relevant section. The quality of answers can vary based on the model's performance.
 
@@ -126,6 +126,13 @@ export LLM_CHAT_MODEL="llama3-1-8b"
 export LLM_API_BASE_URL=https://api.mistral.ai/v1
 export LLM_API_KEY="yourownapikey"
 export LLM_CHAT_MODEL="open-mistral-7b"
+```
+
+* [Nebius](https://studio.nebius.ai)
+```bash
+export LLM_API_BASE_URL=https://api.studio.nebius.ai/v1
+export LLM_API_KEY="yourownapikey"
+export LLM_CHAT_MODEL="meta-llama/Meta-Llama-3.1-8B-Instruct"
 ```
 
 * [Novita](https://novita.ai)
