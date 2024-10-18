@@ -17,6 +17,7 @@ jobs:
           - qwen/qwen-2-7b-instruct                      # $0.0540/$0.0540 [  32K]
           - mistralai/mistral-7b-instruct-v0.3           # $0.0550/$0.0550 [  32K]
           - meta-llama/llama-3.1-8b-instruct             # $0.0550/$0.0550 [ 128K]
+          - mistralai/ministral-8b-instruct              # $0.1000/$0.1000 [ 128K]
           - microsoft/phi-3.5-mini-128k-instruct         # $0.1000/$0.1000 [ 128K]
           - mistralai/mistral-nemo                       # $0.1300/$0.1300 [ 128K]
           - google/gemini-flash-1.5-8b                   # $0.0375/$0.1500 [1000K]
