@@ -12,7 +12,6 @@ jobs:
       fail-fast: false
       matrix:
         model:
-          - meta-llama/llama-3.2-3b-instruct             # $0.0300/$0.0300 [ 128K]
           - mistralai/ministral-3b-instruct              # $0.0400/$0.0400 [ 128K]
           - qwen/qwen-2-7b-instruct                      # $0.0540/$0.0540 [  32K]
           - mistralai/mistral-7b-instruct-v0.3           # $0.0550/$0.0550 [  32K]
@@ -21,7 +20,6 @@ jobs:
           - mistralai/mistral-nemo                       # $0.1300/$0.1300 [ 128K]
           - google/gemini-flash-1.5-8b                   # $0.0375/$0.1500 [1000K]
           - mistralai/mixtral-8x7b-instruct              # $0.2400/$0.2400 [  32K]
-          - meta-llama/llama-3.1-70b-instruct            # $0.3000/$0.3000 [ 128K]
           - ai21/jamba-1-5-mini                          # $0.2000/$0.4000 [ 256K]
           - openai/gpt-4o-mini                           # $0.1500/$0.6000 [ 128K]
     steps:
