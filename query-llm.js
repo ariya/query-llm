@@ -101,9 +101,15 @@ const chat = async (messages, handler) => {
         return '';
     }
 
+    LLM_DEBUG_CHAT &&
+        messages.forEach(({ role, content }) => {
+            console.log(`${MAGENTA}${role}:${NORMAL} ${content}`);
+        });
+
     if (!stream) {
         const data = await response.json();
         const answer = extract(data).trim();
+        LLM_DEBUG_CHAT && console.log(`${YELLOW}${answer}${NORMAL}`);
         (answer.length > 0) && handler && handler(answer);
         return answer;
     }
