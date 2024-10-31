@@ -13,7 +13,7 @@ jobs:
         env:
           LLM_API_BASE_URL: 'https://generativelanguage.googleapis.com/v1beta'
           LLM_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-          LLM_CHAT_MODEL: 'gemini-1.5-flash-002'
+          LLM_CHAT_MODEL: 'gemini-1.5-flash-8b'
           LLM_ZERO_SHOT: 1
 
       - run: cat output.txt
@@ -29,7 +29,7 @@ jobs:
         env:
           LLM_API_BASE_URL: 'https://generativelanguage.googleapis.com/v1beta'
           LLM_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-          LLM_CHAT_MODEL: 'gemini-1.5-flash-002'
+          LLM_CHAT_MODEL: 'gemini-1.5-flash-8b'
 
       - run: cat output.txt
       - run: grep -i jupiter output.txt
@@ -45,7 +45,7 @@ jobs:
         env:
           LLM_API_BASE_URL: 'https://generativelanguage.googleapis.com/v1beta'
           LLM_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-          LLM_CHAT_MODEL: 'gemini-1.5-flash-002'
+          LLM_CHAT_MODEL: 'gemini-1.5-flash-8b'
 
   high-school-stem:
     needs: chain-of-thought
@@ -58,7 +58,7 @@ jobs:
         env:
           LLM_API_BASE_URL: 'https://generativelanguage.googleapis.com/v1beta'
           LLM_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-          LLM_CHAT_MODEL: 'gemini-1.5-flash-002'
+          LLM_CHAT_MODEL: 'gemini-1.5-flash-8b'
 
   general-knowledge:
     needs: chain-of-thought
@@ -71,4 +71,4 @@ jobs:
         env:
           LLM_API_BASE_URL: 'https://generativelanguage.googleapis.com/v1beta'
           LLM_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-          LLM_CHAT_MODEL: 'gemini-1.5-flash-002'
+          LLM_CHAT_MODEL: 'gemini-1.5-flash-8b'
