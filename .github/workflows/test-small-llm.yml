@@ -42,6 +42,7 @@ jobs:
       - run: echo 'Which planet in our solar system is the largest?' | ./query-llm.js | tee output.txt
         env:
           LLM_API_BASE_URL: 'http://127.0.0.1:8080/v1'
+          LLM_JSON_SCHEMA: 1
 
       - run: cat output.txt
       - run: grep -i jupiter output.txt
@@ -64,6 +65,7 @@ jobs:
       - run: ./query-llm.js tests/canary-multi-turn.txt
         env:
           LLM_API_BASE_URL: 'http://127.0.0.1:8080/v1'
+          LLM_JSON_SCHEMA: 1
 
   high-school-stem:
     needs: chain-of-thought
@@ -83,3 +85,4 @@ jobs:
       - run: ./query-llm.js tests/high-school-stem.txt
         env:
           LLM_API_BASE_URL: 'http://127.0.0.1:8080/v1'
+          LLM_JSON_SCHEMA: 1
