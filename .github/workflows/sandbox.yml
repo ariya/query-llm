@@ -15,7 +15,7 @@ jobs:
       fail-fast: false
       matrix:
         model:
-          - mistralai/ministral-3b-instruct              # $0.0400/$0.0400 [ 128K]
+          - microsoft/phi-3.5-mini-128k-instruct         # $0.1000/$0.1000 [ 128K]
     steps:
       - uses: actions/checkout@v4
       - run: ./query-llm.js tests/canary-multi-turn.txt
@@ -31,7 +31,7 @@ jobs:
       fail-fast: false
       matrix:
         model:
-          - mistralai/ministral-3b-instruct              # $0.0400/$0.0400 [ 128K]
+          - microsoft/phi-3.5-mini-128k-instruct         # $0.1000/$0.1000 [ 128K]
     steps:
       - uses: actions/checkout@v4
       - run: ./query-llm.js tests/high-school-stem.txt
@@ -47,7 +47,7 @@ jobs:
       fail-fast: false
       matrix:
         model:
-          - mistralai/ministral-3b-instruct              # $0.0400/$0.0400 [ 128K]
+          - microsoft/phi-3.5-mini-128k-instruct         # $0.1000/$0.1000 [ 128K]
     steps:
       - uses: actions/checkout@v4
       - run: ./query-llm.js tests/general-knowledge.txt
