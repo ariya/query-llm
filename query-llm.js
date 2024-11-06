@@ -345,7 +345,7 @@ const construct = (kv) => {
  */
 const breakdown = (hint, completion) => {
     const text = hint + completion;
-    if (text.startsWith('{') && text.endsWith('}')) {
+    if (text.startsWith('{')) {
         try {
             return unJSON(text);
         } catch (error) {
