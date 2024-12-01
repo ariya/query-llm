@@ -1,0 +1,84 @@
+{
+    "chat": {
+        "timeoutInSeconds": 17,
+        "maxRetryAttempt": 3,
+        "maxTokens": 200,
+        "temperature": 0
+    },
+    "reply": {
+        "prompt": "You are a helpful answering assistant.\nYour task is to reply and respond to the user politely and concisely.\nAnswer in plain text and not in Markdown format."
+    },
+    "reason": {
+        "prompt": "Use Google to search for the answer. Think step by step.\nAlways output your thought in following format",
+        "guideline": {
+            "tool": "the search engine to use (must be Google)",
+            "thought": "describe your thoughts about the inquiry",
+            "keyphrases": "the important key phrases to search for",
+            "observation": "the concise result of the search tool",
+            "topic": "the specific topic covering the inquiry"
+        },
+        "example": {
+            "inquiry": "\nExample:\n\nGiven an inquiry \"What is Pitch Lake in Trinidad famous for?\", you will output:",
+            "output": {
+                "tool": "Google",
+                "thought": "This is about geography, I will use Google search",
+                "keyphrases": "Pitch Lake in Trinidad fame",
+                "observation": "Pitch Lake in Trinidad is the largest natural deposit of asphalt",
+                "topic": "geography"
+            }
+        },
+        "schema": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "tool": {
+                    "type": "string"
+                },
+                "thought": {
+                    "type": "string"
+                },
+                "keyphrases": {
+                    "type": "string"
+                },
+                "observation": {
+                    "type": "string"
+                },
+                "topic": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "tool",
+                "thought",
+                "keyphrases",
+                "observation",
+                "topic"
+            ]
+        }
+    },
+    "respond": {
+        "prompt": "You are an assistant for question-answering tasks.\nYou are digesting the most recent user's inquiry, thought, and observation.\nYour task is to use the observation to answer the inquiry politely and concisely.\nYou may need to refer to the user's conversation history to understand some context.\nThere is no need to mention \"based on the observation\" or \"based on the previous conversation\" in your answer.\nYour answer is in simple English, and at max 3 sentences.\nDo not make any apology or other commentary.\nDo not use other sources of information, including your memory.\nDo not make up new names or come up with new facts.",
+        "guideline": "\nAlways answer in JSON with the following format:\n\n{\n    \"answer\": // accurate and polite answer\n}",
+        "schema": {
+            "type": "object",
+            "additionalProperties": "false",
+            "properties": {
+                "answer": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "answer"
+            ]
+        }
+    },
+    "predefinedKeys": [
+        "inquiry",
+        "tool",
+        "thought",
+        "keyphrases",
+        "observation",
+        "answer",
+        "topic"
+    ]
+}

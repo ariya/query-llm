@@ -2,6 +2,24 @@
 
 const fs = require('fs');
 const readline = require('readline');
+const config = require('./configs/config.json');
+
+const TIMEOUT = config.chat.timeoutInSeconds
+const MAX_RETRY_ATTEMPT = config.chat.maxRetryAttempt;
+const MAX_TOKENS = config.chat.maxTokens
+const TEMPERATURE = config.chat.temperature
+const REPLY_PROMPT = config.reply.prompt
+const PREDEFINED_KEYS = config.predefinedKeys
+
+const REASON_PROMPT = config.reason.prompt
+const REASON_GUIDELINE = config.reason.guideline
+const REASON_EXAMPLE_INQUIRY = config.reason.example.inquiry
+const REASON_EXAMPLE_OUTPUT = config.reason.example.output
+const REASON_SCHEMA = config.reason.schema
+
+const RESPOND_PROMPT = config.respond.prompt
+const RESPOND_GUIDELINE = config.respond.guideline
+const RESPOND_SCHEMA = config.respond.schema
 
 const LLM_API_BASE_URL = process.env.LLM_API_BASE_URL || 'https://api.openai.com/v1';
 const LLM_API_KEY = process.env.LLM_API_KEY || process.env.OPENAI_API_KEY;
@@ -33,8 +51,6 @@ const CROSS = '✘';
  * @returns {function}
  */
 const pipe = (...fns) => arg => fns.reduce((d, fn) => d.then(fn), Promise.resolve(arg));
-
-const MAX_RETRY_ATTEMPT = 3;
 
 /**
  * Suspends the execution for a specified amount of time.
@@ -94,7 +110,6 @@ const unJSON = (text) => {
  */
 
 const chat = async (messages, schema, handler = null, attempt = MAX_RETRY_ATTEMPT) => {
-    const timeout = 17; // seconds
     const gemini = LLM_API_BASE_URL.indexOf('generativelanguage.google') > 0;
     const stream = LLM_STREAMING && typeof handler === 'function';
     const model = LLM_CHAT_MODEL || 'gpt-4o-mini';
@@ -102,8 +117,6 @@ const chat = async (messages, schema, handler = null, attempt = MAX_RETRY_ATTEMP
     const url = gemini ? `${LLM_API_BASE_URL}/models/${model}:${generate}key=${LLM_API_KEY}` : `${LLM_API_BASE_URL}/chat/completions`
     const auth = (LLM_API_KEY && !gemini) ? { 'Authorization': `Bearer ${LLM_API_KEY}` } : {};
     const stop = ['<|im_end|>', '<|end|>', '<|eot_id|>'];
-    const max_tokens = 200;
-    const temperature = 0;
 
     const response_format = schema ? {
         type: 'json_schema',
@@ -123,11 +136,11 @@ const chat = async (messages, schema, handler = null, attempt = MAX_RETRY_ATTEMP
     });
     const contents = bundles.filter(({ role }) => role === 'user');
     const system_instruction = bundles.filter(({ role }) => role === 'system').shift();
-    const generationConfig = { temperature, response_mime_type, response_schema, maxOutputTokens: max_tokens };
+    const generationConfig = { TEMPERATURE, response_mime_type, response_schema, maxOutputTokens: MAX_TOKENS };
 
     const body = gemini ?
         { system_instruction, contents, generationConfig } :
-        { messages, response_format, model, stop, max_tokens, temperature, stream }
+        { messages, response_format, model, stop, MAX_TOKENS, TEMPERATURE, stream }
 
     LLM_DEBUG_CHAT &&
         messages.forEach(({ role, content }) => {
@@ -239,7 +252,7 @@ const chat = async (messages, schema, handler = null, attempt = MAX_RETRY_ATTEMP
         return answer;
     } catch (e) {
         if (e.name === 'TimeoutError') {
-            LLM_DEBUG_CHAT && console.log(`Timeout with LLM chat after ${timeout} seconds`);
+            LLM_DEBUG_CHAT && console.log(`Timeout with LLM chat after ${TIMEOUT} seconds`);
         }
         if (attempt > 1 && (e.name === 'TimeoutError' || e.name === 'EvalError')) {
             LLM_DEBUG_CHAT && console.log('Retrying...');
@@ -258,10 +271,6 @@ const chat = async (messages, schema, handler = null, attempt = MAX_RETRY_ATTEMP
  * @param {Context} context - Current pipeline context.
  * @returns {Context} Updated pipeline context.
  */
-
-const REPLY_PROMPT = `You are a helpful answering assistant.
-Your task is to reply and respond to the user politely and concisely.
-Answer in plain text and not in Markdown format.`;
 
 const reply = async (context) => {
     const { inquiry, history, delegates } = context;
@@ -284,8 +293,6 @@ const reply = async (context) => {
     leave && leave('Reply', { inquiry, answer });
     return { answer, ...context };
 }
-
-const PREDEFINED_KEYS = ['inquiry', 'tool', 'thought', 'keyphrases', 'observation', 'answer', 'topic'];
 
 /**
  * Break downs a multi-line text based on a number of predefined keys.
@@ -407,59 +414,6 @@ const structure = (prefix, object) => {
  * @returns {Context} Updated pipeline context.
  */
 
-const REASON_PROMPT = `Use Google to search for the answer. Think step by step.
-Always output your thought in following format`
-
-const REASON_GUIDELINE = {
-    tool: 'the search engine to use (must be Google)',
-    thought: 'describe your thoughts about the inquiry',
-    keyphrases: 'the important key phrases to search for',
-    observation: 'the concise result of the search tool',
-    topic: 'the specific topic covering the inquiry'
-};
-
-const REASON_EXAMPLE_INQUIRY = `
-Example:
-
-Given an inquiry "What is Pitch Lake in Trinidad famous for?", you will output:`;
-
-const REASON_EXAMPLE_OUTPUT = {
-    tool: 'Google',
-    thought: 'This is about geography, I will use Google search',
-    keyphrases: 'Pitch Lake in Trinidad fame',
-    observation: 'Pitch Lake in Trinidad is the largest natural deposit of asphalt',
-    topic: 'geography'
-};
-
-const REASON_SCHEMA = {
-    type: 'object',
-    additionalProperties: false,
-    properties: {
-        tool: {
-            type: 'string'
-        },
-        thought: {
-            type: 'string'
-        },
-        keyphrases: {
-            type: 'string'
-        },
-        observation: {
-            type: 'string'
-        },
-        topic: {
-            type: 'string'
-        }
-    },
-    required: [
-        'tool',
-        'thought',
-        'keyphrases',
-        'observation',
-        'topic'
-    ]
-};
-
 /**
  * Performs a basic step-by-step reasoning, in the style of Chain of Thought.
  * The updated context will contains new information such as `keyphrases` and `observation`.
@@ -517,34 +471,6 @@ const reason = async (context) => {
  * @param {Context} context - Current pipeline context.
  * @returns {Context} Updated pipeline context.
  */
-
-const RESPOND_PROMPT = `You are an assistant for question-answering tasks.
-You are digesting the most recent user's inquiry, thought, and observation.
-Your task is to use the observation to answer the inquiry politely and concisely.
-You may need to refer to the user's conversation history to understand some context.
-There is no need to mention "based on the observation" or "based on the previous conversation" in your answer.
-Your answer is in simple English, and at max 3 sentences.
-Do not make any apology or other commentary.
-Do not use other sources of information, including your memory.
-Do not make up new names or come up with new facts.`;
-
-const RESPOND_GUIDELINE = `
-Always answer in JSON with the following format:
-
-{
-    "answer": // accurate and polite answer
-}`;
-
-const RESPOND_SCHEMA = {
-    type: 'object',
-    additionalProperties: false,
-    properties: {
-        answer: {
-            type: 'string'
-        }
-    },
-    required: ['answer']
-}
 
 const respond = async (context) => {
     const { history, delegates } = context;
