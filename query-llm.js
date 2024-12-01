@@ -21,9 +21,9 @@ const RESPOND_PROMPT = config.respond.prompt
 const RESPOND_GUIDELINE = config.respond.guideline
 const RESPOND_SCHEMA = config.respond.schema
 
-const LLM_API_BASE_URL = process.env.LLM_API_BASE_URL || 'https://api.openai.com/v1';
+const LLM_API_BASE_URL = process.env.LLM_API_BASE_URL || config.defaultLlm.baseUrl;
 const LLM_API_KEY = process.env.LLM_API_KEY || process.env.OPENAI_API_KEY;
-const LLM_CHAT_MODEL = process.env.LLM_CHAT_MODEL;
+const LLM_CHAT_MODEL = process.env.LLM_CHAT_MODEL || config.defaultLlm.model;
 const LLM_STREAMING = process.env.LLM_STREAMING !== 'no';
 const LLM_JSON_SCHEMA = process.env.LLM_JSON_SCHEMA;
 
@@ -112,7 +112,7 @@ const unJSON = (text) => {
 const chat = async (messages, schema, handler = null, attempt = MAX_RETRY_ATTEMPT) => {
     const gemini = LLM_API_BASE_URL.indexOf('generativelanguage.google') > 0;
     const stream = LLM_STREAMING && typeof handler === 'function';
-    const model = LLM_CHAT_MODEL || 'gpt-4o-mini';
+    const model = LLM_CHAT_MODEL;
     const generate = stream ? 'streamGenerateContent?alt=sse&' : 'generateContent?'
     const url = gemini ? `${LLM_API_BASE_URL}/models/${model}:${generate}key=${LLM_API_KEY}` : `${LLM_API_BASE_URL}/chat/completions`
     const auth = (LLM_API_KEY && !gemini) ? { 'Authorization': `Bearer ${LLM_API_KEY}` } : {};

@@ -1,4 +1,8 @@
 {
+    "defaultLlm": {
+        "baseUrl": "https://api.openai.com/v1",
+        "model": "gpt-4o-mini"
+    },
     "chat": {
         "timeoutInSeconds": 17,
         "maxRetryAttempt": 3,
