@@ -19,6 +19,7 @@ jobs:
           - google/gemini-flash-1.5-8b                   # $0.0375/$0.1500 [1000K]
           - amazon/nova-lite-v1                          # $0.0600/$0.2400 [ 300K]
           - qwen/qwen-2.5-7b-instruct                    # $0.2700/$0.2700 [ 128K]
+          - google/gemini-flash-1.5                      # $0.0750/$0.3000 [1000K]
           - openai/gpt-4o-mini                           # $0.1500/$0.6000 [ 128K]
     steps:
       - uses: actions/checkout@v4
