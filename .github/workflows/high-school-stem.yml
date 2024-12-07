@@ -19,6 +19,7 @@ jobs:
           - mistralai/ministral-8b-instruct              # $0.1000/$0.1000 [ 128K]
           - mistralai/mistral-nemo                       # $0.1300/$0.1300 [ 128K]
           - google/gemini-flash-1.5-8b                   # $0.0375/$0.1500 [1000K]
+          - amazon/nova-lite-v1                          # $0.0600/$0.2400 [ 300K]
           - mistralai/mixtral-8x7b-instruct              # $0.2400/$0.2400 [  32K]
           - qwen/qwen-2.5-7b-instruct                    # $0.2700/$0.2700 [ 128K]
           - meta-llama/llama-3.1-70b-instruct            # $0.3000/$0.3000 [ 128K]
