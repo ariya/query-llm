@@ -81,7 +81,7 @@ Assistant: The /Gobi/ desert is a large desert located near Mongolia.
 Pipeline.Reason.Keyphrases: /desert/ /Mongolia/
 
 User: Name the no 1 tallest building in the Middle East
-Assistant: The /Burj Khalifa/ in Dubai, UAE, is the tallest building in the Middle East.
+Assistant: The /Jeddah Tower|Burj Khalifa/ is the tallest building in the Middle East.
 Pipeline.Reason.Keyphrases: /building/ /Middle East/
 
 User: Which country is famous for its pyramids?
