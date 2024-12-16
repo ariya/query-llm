@@ -618,7 +618,6 @@ func chat(
 		if err != nil {
 			return nil, err
 		}
-		defer resp.Body.Close()
 
 		if resp.StatusCode != http.StatusOK {
 			return nil, fmt.Errorf("HTTP error: %d %s", resp.StatusCode, resp.Status)
@@ -638,6 +637,7 @@ func chat(
 	if err != nil {
 		return "", err
 	}
+	defer resp.Body.Close()
 
 	if !isStreaming {
 		var data struct {
@@ -711,7 +711,10 @@ func reply(context Context) (*Context, error) {
 		{Role: "system", Content: REPLY_PROMPT},
 	}
 
-	relevant := history[len(history)-5:]
+	relevant := history
+	if len(history) >= 5 {
+		relevant = history[len(history)-5:]
+	}
 	for _, msg := range relevant {
 		messages = append(messages, Message{Role: "user", Content: msg.Inquiry})
 		messages = append(messages, Message{Role: "assistant", Content: msg.Answer})
@@ -755,7 +758,10 @@ func reason(context Context) (*Context, error) {
 		return REASON_SCHEMA
 	}()
 	prompt := structure(REASON_PROMPT, REASON_GUIDELINE)
-	relevant := history[len(history)-3:]
+	relevant := history
+	if len(history) >= 3 {
+		relevant = history[len(history)-3:]
+	}
 	if len(relevant) == 0 {
 		prompt += structure(REASON_EXAMPLE_INQUIRY, REASON_EXAMPLE_OUTPUT)
 	}
@@ -840,7 +846,10 @@ func respond(context Context) (*Context, error) {
 	if schema != nil {
 		prompt += RESPOND_GUIDELINE
 	}
-	relevant := history[len(history)-2:]
+	relevant := history
+	if len(history) >= 2 {
+		relevant = history[len(history)-2:]
+	}
 	if len(relevant) > 0 {
 		prompt += "\n\nFor your reference, you and the user have the following Q&A discussion:\n"
 		for _, msg := range relevant {
@@ -1049,5 +1058,108 @@ func evaluate(filename string) {
 	if err := scanner.Err(); err != nil {
 		fmt.Println("ERROR:", err)
 		os.Exit(-1)
+	}
+}
+
+func interact() {
+	history := make([]History, 0)
+	loop := true
+	scanner := bufio.NewScanner(os.Stdin)
+
+	var qa func()
+	qa = func() {
+		fmt.Print(YELLOW + ">> " + CYAN)
+		if !scanner.Scan() {
+			loop = false
+			return
+		}
+		inquiry := scanner.Text()
+		fmt.Print(NORMAL)
+		if inquiry == "!review" || inquiry == "/review" {
+			if len(history) == 0 {
+				fmt.Println("Nothing to review yet!")
+				fmt.Println()
+			} else {
+				last := history[len(history)-1]
+				stages := last.Stages
+				review(simplify(stages))
+			}
+		} else {
+			input := ""
+			output := ""
+			stream := func(text string) {
+				if LLMJsonSchema != "" {
+					input += text
+					answer := unJSON(input)["answer"].(string)
+					if len(answer) > 0 {
+						fmt.Print(answer[len(output):])
+						output = answer
+					}
+				} else {
+					fmt.Print(text)
+				}
+			}
+
+			stages := []Stage{}
+			update := func(stage string, fields map[string]interface{}) {
+				if stage == "Reason" {
+					keyphrases := fields["keyphrases"].(string)
+					if len(keyphrases) > 0 {
+						fmt.Printf("%s%s Searching for %s...%s\n", GRAY, ARROW, keyphrases, NORMAL)
+					}
+				}
+			}
+			enter := func(name string) {
+				stages = append(stages, Stage{Name: name, Timestamp: time.Now().Unix()})
+			}
+			leave := func(name string, fields map[string]interface{}) {
+				update(name, fields)
+				stages = append(stages, Stage{Name: name, Timestamp: time.Now().Unix(), Fields: fields})
+			}
+			delegates := Delegates{Stream: stream, Enter: enter, Leave: leave}
+			context := Context{Inquiry: inquiry, History: history, Delegates: delegates}
+			start := time.Now()
+			pipeline := func() func(Context) (*Context, error) {
+				if LLMZeroShot != "" {
+					return reply
+				} else {
+					return pipe(reason, respond)
+				}
+			}()
+			result, err := pipeline(context)
+			if err != nil {
+				fmt.Println("ERROR:", err)
+				fmt.Println()
+				os.Exit(-1)
+			}
+			duration := time.Since(start).Milliseconds()
+			history = append(history, History{
+				Inquiry:    inquiry,
+				Thought:    result.Thought,
+				Keyphrases: result.Keyphrases,
+				Topic:      result.Topic,
+				Answer:     result.Answer,
+				Duration:   duration,
+				Stages:     stages,
+			})
+			fmt.Println()
+		}
+		if loop {
+			qa()
+		}
+	}
+
+	qa()
+}
+
+func main() {
+	fmt.Printf("Using LLM at %s (model: %s%s%s).\n", LLMAPIBaseURL, GREEN, LLMChatModel, NORMAL)
+
+	args := os.Args[1:]
+	for _, arg := range args {
+		evaluate(arg)
+	}
+	if len(args) == 0 {
+		interact()
 	}
 }
