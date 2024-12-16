@@ -1090,10 +1090,13 @@ func interact() {
 			stream := func(text string) {
 				if LLMJsonSchema != "" {
 					input += text
-					answer := unJSON(input)["answer"].(string)
-					if len(answer) > 0 {
-						fmt.Print(answer[len(output):])
-						output = answer
+					answerObj := unJSON(input)["answer"]
+					if answerObj != nil {
+						answer := answerObj.(string)
+						if len(answer) > 0 {
+							fmt.Print(answer[len(output):])
+							output = answer
+						}
 					}
 				} else {
 					fmt.Print(text)

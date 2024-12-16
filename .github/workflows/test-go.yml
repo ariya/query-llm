@@ -1,0 +1,50 @@
+name: Test with Go
+
+on: [ push, pull_request, workflow_dispatch ]
+
+jobs:
+  zero-shot:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: '>=1.17.0'
+
+      - run: go version
+
+      - name: Prepare LLM
+        uses: ./.github/actions/prepare-llm
+        timeout-minutes: 3
+
+      - run: echo 'Which planet in our solar system is the largest?' | go run ./query-llm.go | tee output.txt
+        env:
+          LLM_API_BASE_URL: 'http://127.0.0.1:8080/v1'
+          LLM_ZERO_SHOT: 1
+
+      - run: cat output.txt
+      - run: grep -i jupiter output.txt
+
+  chain-of-thought:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: '>=1.17.0'
+
+      - run: go version
+
+      - name: Prepare LLM
+        uses: ./.github/actions/prepare-llm
+        timeout-minutes: 3
+
+      - run: echo 'Which planet in our solar system is the largest?' | go run ./query-llm.go | tee output.txt
+        env:
+          LLM_API_BASE_URL: 'http://127.0.0.1:8080/v1'
+          LLM_JSON_SCHEMA: 1
+
+      - run: cat output.txt
+      - run: grep -i jupiter output.txt
