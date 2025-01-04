@@ -26,7 +26,7 @@ jobs:
       - run: cat output.txt
       - run: grep -i jupiter output.txt
 
-  chain-of-thought:
+  chain-of-thought-streaming:
     runs-on: ubuntu-22.04
     timeout-minutes: 5
     steps:
@@ -45,6 +45,75 @@ jobs:
         env:
           LLM_API_BASE_URL: 'http://127.0.0.1:8080/v1'
           LLM_JSON_SCHEMA: 1
+          LLM_STREAMING: yes
+
+      - run: cat output.txt
+      - run: grep -i jupiter output.txt
+
+  chain-of-thought-no-streaming:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: '>=1.17.0'
+
+      - run: go version
+
+      - name: Prepare LLM
+        uses: ./.github/actions/prepare-llm
+        timeout-minutes: 3
+
+      - run: echo 'Which planet in our solar system is the largest?' | go run ./query-llm.go | tee output.txt
+        env:
+          LLM_API_BASE_URL: 'http://127.0.0.1:8080/v1'
+          LLM_JSON_SCHEMA: 1
+          LLM_STREAMING: no
+
+      - run: cat output.txt
+      - run: grep -i jupiter output.txt
+
+  chain-of-thought-using-gemini-streaming:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: '>=1.17.0'
+
+      - run: go version
+
+      - run: echo 'Which planet in our solar system is the largest?' | go run ./query-llm.go | tee output.txt
+        env:
+          LLM_API_BASE_URL: 'https://generativelanguage.googleapis.com/v1beta'
+          LLM_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          LLM_CHAT_MODEL: 'gemini-1.5-flash-8b'
+          LLM_JSON_SCHEMA: 1
+          LLM_STREAMING: yes
+
+      - run: cat output.txt
+      - run: grep -i jupiter output.txt
+
+  chain-of-thought-using-gemini-no-streaming:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: '>=1.17.0'
+
+      - run: go version
+
+      - run: echo 'Which planet in our solar system is the largest?' | go run ./query-llm.go | tee output.txt
+        env:
+          LLM_API_BASE_URL: 'https://generativelanguage.googleapis.com/v1beta'
+          LLM_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          LLM_CHAT_MODEL: 'gemini-1.5-flash-8b'
+          LLM_JSON_SCHEMA: 1
+          LLM_STREAMING: no
 
       - run: cat output.txt
       - run: grep -i jupiter output.txt
