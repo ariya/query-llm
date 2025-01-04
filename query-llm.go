@@ -183,10 +183,22 @@ type GeminiGenerationConfig struct {
 	MaxOutputTokens  int                    `json:"maxOutputTokens"`
 }
 
+type ResponseData struct {
+	Choices    []Choice    `json:"choices"`
+	Candidates []Candidate `json:"candidates"`
+}
+
 type Choice struct {
 	Message struct {
 		Content string `json:"content"`
 	} `json:"message"`
+	Delta struct {
+		Content string `json:"content"`
+	} `json:"delta"`
+}
+
+type Candidate struct {
+	Content GeminiContent `json:"content"`
 }
 
 type Context struct {
@@ -639,21 +651,58 @@ func chat(
 	}
 	defer resp.Body.Close()
 
-	if !isStreaming {
-		var data struct {
-			Choices []Choice `json:"choices"`
+	extract := func(data ResponseData) string {
+		if len(data.Candidates) > 0 {
+			// Gemini in particular
+			var answer string
+			parts := data.Candidates[0].Content.Parts
+			if len(parts) > 0 {
+				var texts []string
+				for _, part := range parts {
+					texts = append(texts, part.Text)
+				}
+				answer = strings.Join(texts, "")
+			}
+			return answer
+
+		} else {
+			// LLM in general
+			return data.Choices[0].Message.Content
 		}
+	}
+
+	if !isStreaming {
+		var data ResponseData
 		err := json.NewDecoder(resp.Body).Decode(&data)
 		if err != nil {
 			return "", err
 		}
-		answer := data.Choices[0].Message.Content
+		answer := extract(data)
 		if handler != nil {
 			handler(answer)
 		}
 		return answer, nil
 
 	} else {
+		parse := func(line string) (string, error) {
+			var partial string
+			payload := line[6:]
+			var data ResponseData
+			err := json.Unmarshal([]byte(payload), &data)
+			if err != nil {
+				return "", err
+			}
+
+			if len(data.Choices) > 0 {
+				partial = data.Choices[0].Delta.Content
+
+			} else if len(data.Candidates) > 0 {
+				partial = extract(data)
+			}
+
+			return partial, nil
+		}
+
 		handleResponseStream := func(resp http.Response, handler func(string)) (string, error) {
 			answer := ""
 			scanner := bufio.NewScanner(resp.Body)
@@ -669,19 +718,10 @@ func chat(
 					break
 				}
 				if strings.HasPrefix(line, "data: ") {
-					payload := line[6:]
-					var data struct {
-						Choices []struct {
-							Delta struct {
-								Content string `json:"content"`
-							} `json:"delta"`
-						} `json:"choices"`
-					}
-					err := json.Unmarshal([]byte(payload), &data)
+					partial, err := parse(line)
 					if err != nil {
 						return "", err
 					}
-					partial := data.Choices[0].Delta.Content
 					answer += partial
 					if handler != nil {
 						handler(partial)
