@@ -15,7 +15,7 @@ jobs:
       fail-fast: false
       matrix:
         model:
-          - anthropic/claude-3.5-haiku-20241022          # $0.8000/$4.0000 [ 200K]
+          - google/gemini-2.0-flash-lite-001             # $0.0750/$0.3000 [1000K]
     steps:
       - uses: actions/checkout@v4
       - run: ./query-llm.js tests/canary-multi-turn.txt
@@ -31,7 +31,7 @@ jobs:
       fail-fast: false
       matrix:
         model:
-          - anthropic/claude-3.5-haiku-20241022          # $0.8000/$4.0000 [ 200K]
+          - google/gemini-2.0-flash-lite-001             # $0.0750/$0.3000 [1000K]
     steps:
       - uses: actions/checkout@v4
       - run: ./query-llm.js tests/high-school-stem.txt
@@ -47,7 +47,7 @@ jobs:
       fail-fast: false
       matrix:
         model:
-          - anthropic/claude-3.5-haiku-20241022          # $0.8000/$4.0000 [ 200K]
+          - google/gemini-2.0-flash-lite-001             # $0.0750/$0.3000 [1000K]
     steps:
       - uses: actions/checkout@v4
       - run: ./query-llm.js tests/general-knowledge.txt
