@@ -12,10 +12,8 @@ jobs:
       fail-fast: false
       matrix:
         model:
-          - mistralai/ministral-3b-instruct              # $0.0400/$0.0400 [ 128K]
           - mistralai/mistral-7b-instruct-v0.3           # $0.0550/$0.0550 [  32K]
           - meta-llama/llama-3.2-11b-vision-instruct     # $0.0550/$0.0550 [ 128K]
-          - mistralai/ministral-8b-instruct              # $0.1000/$0.1000 [ 128K]
           - mistralai/mistral-nemo                       # $0.1300/$0.1300 [ 128K]
           - amazon/nova-micro-v1                         # $0.0350/$0.1400 [ 128K]
           - google/gemini-flash-1.5-8b                   # $0.0375/$0.1500 [1000K]
