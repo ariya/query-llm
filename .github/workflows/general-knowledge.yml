@@ -15,10 +15,9 @@ jobs:
           - mistralai/mistral-7b-instruct-v0.3           # $0.0550/$0.0550 [  32K]
           - meta-llama/llama-3.2-11b-vision-instruct     # $0.0550/$0.0550 [ 128K]
           - mistralai/mistral-nemo                       # $0.1300/$0.1300 [ 128K]
-          - google/gemini-flash-1.5-8b                   # $0.0375/$0.1500 [1000K]
           - amazon/nova-lite-v1                          # $0.0600/$0.2400 [ 300K]
           - qwen/qwen-2.5-7b-instruct                    # $0.2700/$0.2700 [ 128K]
-          - google/gemini-flash-1.5                      # $0.0750/$0.3000 [1000K]
+          - google/gemini-2.0-flash-001                  # $0.1000/$0.4000 [1000K]
           - meta-llama/llama-3.3-70b-instruct            # $0.1300/$0.4000 [ 128K]
           - openai/gpt-4o-mini                           # $0.1500/$0.6000 [ 128K]
     steps:
