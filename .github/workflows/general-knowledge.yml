@@ -12,6 +12,7 @@ jobs:
       fail-fast: false
       matrix:
         model:
+          - meta-llama/llama-3.1-8b-instruct             # $0.0200/$0.0500 [ 128K]
           - mistralai/mistral-7b-instruct-v0.3           # $0.0550/$0.0550 [  32K]
           - mistralai/mistral-nemo                       # $0.1300/$0.1300 [ 128K]
           - amazon/nova-lite-v1                          # $0.0600/$0.2400 [ 300K]
