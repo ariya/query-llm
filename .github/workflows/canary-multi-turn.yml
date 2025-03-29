@@ -19,7 +19,6 @@ jobs:
           - amazon/nova-micro-v1                         # $0.0350/$0.1400 [ 128K]
           - amazon/nova-lite-v1                          # $0.0600/$0.2400 [ 300K]
           - mistralai/mixtral-8x7b-instruct              # $0.2400/$0.2400 [  32K]
-          - qwen/qwen-2.5-7b-instruct                    # $0.2700/$0.2700 [ 128K]
           - google/gemini-2.0-flash-001                  # $0.1000/$0.4000 [1000K]
           - meta-llama/llama-3.3-70b-instruct            # $0.1300/$0.4000 [ 128K]
           - openai/gpt-4o-mini                           # $0.1500/$0.6000 [ 128K]
