@@ -124,7 +124,7 @@ Pipeline.Reason.Keyphrases: /biryani|origin/
 
 User: What is the green paste used with sushi?
 Assistant: The green paste served with sushi is known as /wasabi/.
-Pipeline.Reason.Keyphrases: /green|wasabi/ /paste/
+Pipeline.Reason.Keyphrases: /green|paste|wasabi/
 
 User: Where is Nasi Lemak originated?
 Assistant: Nasi Lemak is a traditional dish from /Malaysia|Malay/.
