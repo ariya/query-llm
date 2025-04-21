@@ -25,6 +25,7 @@ jobs:
           - google/gemini-2.0-flash-001                  # $0.1000/$0.4000 [1000K]
           - openai/gpt-4.1-nano                          # $0.1000/$0.4000 [1000K]
           - meta-llama/llama-3.3-70b-instruct            # $0.1300/$0.4000 [ 128K]
+          - google/gemini-2.5-flash-preview              # $0.1500/$0.6000 [1000K]
     steps:
       - uses: actions/checkout@v4
 
