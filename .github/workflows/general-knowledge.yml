@@ -18,7 +18,7 @@ jobs:
           - mistralai/mistral-nemo                       # $0.1300/$0.1300 [ 128K]
           - qwen/qwen-turbo                              # $0.0500/$0.2000 [1000K]
           - amazon/nova-lite-v1                          # $0.0600/$0.2400 [ 300K]
-          - qwen/qwen-2.5-7b-instruct                    # $0.2700/$0.2700 [ 128K]
+          - qwen/qwen3-14b                               # $0.0800/$0.2400 [  40K]
           - meta-llama/llama-4-scout                     # $0.0800/$0.3000 [ 320K]
           - mistralai/mistral-small-3.1-24b-instruct     # $0.1000/$0.3000 [ 128K]
           - google/gemini-2.0-flash-001                  # $0.1000/$0.4000 [1000K]
