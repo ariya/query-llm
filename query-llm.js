@@ -97,7 +97,7 @@ const chat = async (messages, schema, handler = null, attempt = MAX_RETRY_ATTEMP
     const timeout = 17; // seconds
     const gemini = LLM_API_BASE_URL.indexOf('generativelanguage.google') > 0;
     const stream = LLM_STREAMING && typeof handler === 'function';
-    const model = LLM_CHAT_MODEL || 'gpt-4o-mini';
+    const model = LLM_CHAT_MODEL || 'gpt-4.1-nano';
     const generate = stream ? 'streamGenerateContent?alt=sse&' : 'generateContent?'
     const url = gemini ? `${LLM_API_BASE_URL}/models/${model}:${generate}key=${LLM_API_KEY}` : `${LLM_API_BASE_URL}/chat/completions`
     const auth = (LLM_API_KEY && !gemini) ? { 'Authorization': `Bearer ${LLM_API_KEY}` } : {};
