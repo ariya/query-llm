@@ -113,6 +113,14 @@ export LLM_API_KEY="yourownapikey"
 export LLM_CHAT_MODEL="accounts/fireworks/models/llama-v3p1-8b-instruct"
 ```
 
+* [Glama](https://glama.ai)
+```bash
+export LLM_API_BASE_URL=https://glama.ai/api/gateway/openai/v1
+export LLM_API_KEY="yourownapikey"
+export LLM_CHAT_MODEL='ministral-3b-2410'
+export LLM_STREAMING="no"
+```
+
 * [Google Gemini](https://ai.google.dev/gemini-api)
 ```bash
 export LLM_API_BASE_URL=https://generativelanguage.googleapis.com/v1beta
