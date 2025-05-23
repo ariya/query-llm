@@ -67,16 +67,9 @@ export LLM_API_BASE_URL=http://127.0.0.1:10002/v1
 
 ## Using Managed LLM Services
 
-Supported LLM services include [AI21](https://studio.ai21.com), [Avian](https://avian.io), [Cerebras](https://cloud.cerebras.ai), [Deep Infra](https://deepinfra.com), [DeepSeek](https://platform.deepseek.com/), [Fireworks](https://fireworks.ai), [Gemini](https://ai.google.dev/gemini-api), [Groq](https://groq.com), [Hyperbolic](https://www.hyperbolic.xyz), [Mistral](https://console.mistral.ai), [Nebius](https://studio.nebius.ai), [Novita](https://novita.ai), [OpenAI](https://platform.openai.com), [OpenRouter](https://openrouter.ai), and [Together](https://www.together.ai).
+Supported LLM services include [Avian](https://avian.io), [Cerebras](https://cloud.cerebras.ai), [Deep Infra](https://deepinfra.com), [DeepSeek](https://platform.deepseek.com/), [Fireworks](https://fireworks.ai), [Gemini](https://ai.google.dev/gemini-api), [Groq](https://groq.com), [Hyperbolic](https://www.hyperbolic.xyz), [Mistral](https://console.mistral.ai), [Nebius](https://studio.nebius.ai), [Novita](https://novita.ai), [OpenAI](https://platform.openai.com), [OpenRouter](https://openrouter.ai), and [Together](https://www.together.ai).
 
 For configuration specifics, refer to the relevant section. The quality of answers can vary based on the model's performance.
-
-* [AI21](https://studio.ai21.com)
-```bash
-export LLM_API_BASE_URL=https://api.ai21.com/studio/v1
-export LLM_API_KEY="yourownapikey"
-export LLM_CHAT_MODEL=jamba-1.5-mini
-```
 
 * [Avian](https://avian.io)
 ```bash
